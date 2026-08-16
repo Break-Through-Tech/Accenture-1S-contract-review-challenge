@@ -148,8 +148,34 @@ The following resources will help your team understand the problem space and pot
 • VS Code
 • Jupyter Notebooks
 
-
 ---
+
+## Coach Questions - Advisor Guidance
+
+**Data & Format:**
+  Use the CUAD JSON files as the source of truth but reshape them into a chunk-based multi-label classification format for model training. Each contract chunk should be labeled with one or more applicable clause categories. The CUAD train/test split may be reused if the split is preserved at the contract level. Chunks from the same contract should not appear in both train and test sets to avoid data leakage.
+
+**Clause Category Scope:**
+  For the initial scope, focus on approximately 10 high-value clause categories rather than all 41. Suggested priority categories are: Limitation of Liability, Indemnification, Termination Rights, Confidentiality, Governing Law, Dispute Resolution, Assignment, Change of Control, Auto-Renewal, and Exclusivity or Non-Compete / Non-Solicit obligations. This list can be refined during advisor check-ins.
+
+**Risk Scoring:**
+  Risk should be based on legal, financial, operational, or compliance exposure. Examples of risky signals include missing or unlimited liability cap, broad indemnification, one-sided termination rights, vague language, auto-renewal without clear notice, restrictive assignment/change-of-control terms, unfavorable governing law, or missing expected clauses.
+
+For this challenge, the team should define a simple Low/Medium/High rubric:
+
+Low: Standard clause with limited business impact.
+Medium: Clause contains unclear, non-standard, or potentially unfavorable language.
+High: Clause may create significant legal, financial, operational, or compliance exposure and should be prioritized for human review.
+Missing expected clauses may count as risk signals, but should be handled carefully because “not detected” may not always mean “truly missing.” Risk signals should be weighted rather than treated equally. Higher-weight items include unlimited liability, broad indemnification, unfavorable termination, and missing liability cap.
+
+**Advisor Reference Ranking:**
+  
+  The team can select a small sample of 20–30 clauses that may be hand-ranked by the advisor as Low, Medium, or High to help the team compare model-generated risk scores against advisor judgment. This should be used as a lightweight validation aid, not a full ground-truth dataset.
+
+**Modeling / Implementation:**
+  Google Colab free tier should be sufficient for the initial scope if the team uses a smaller model, limits the number of clause categories, and starts with a baseline approach. Paid compute is not required unless the team chooses larger models or extensive experiments.
+
+For long contracts, use paragraph-based chunking where possible, with a maximum token limit and optional overlapping windows. If paragraphs are too long, split by sentence or fixed token length. The team should document the chunking method and ensure it preserves enough context for clause classification.
 
 ## 🚀 Getting Started
 
