@@ -70,9 +70,9 @@ Stretch goals include span extraction, a trained risk model benchmarked against 
 Use these milestones to guide your work. Your team will create a GitHub Projects board to track tasks within each milestone.
 | Month | Milestone | Key Activities |
 |-------|-----------|----------------|
-| **September** | [Title] | Clean and split the CUAD data, run EDA on class imbalance, build a chunking strategy, and establish a TF-IDF/keyword baseline with per-category metrics. |
-| **October** | [Title] | Fine-tune a transformer encoder for multi-label clause classification, address class imbalance, evaluate with per-category precision/recall/F1, and conduct error analysis. |
-| **November** | [Title] | Build and calibrate the four-signal risk-scoring layer, assemble the end-to-end pipeline, and validate risk rankings against advisor-labeled examples. |
+| **September** | Data Preparation & Baseline Modeling | Clean and split the CUAD data, run EDA on class imbalance, build a chunking strategy, and establish a TF-IDF/keyword baseline with per-category metrics. |
+| **October** | Transformer Model Development | Fine-tune a transformer encoder for multi-label clause classification, address class imbalance, evaluate with per-category precision/recall/F1, and conduct error analysis. |
+| **November** | Risk Scoring & End-to-End Validation | Build and calibrate the four-signal risk-scoring layer, assemble the end-to-end pipeline, and validate risk rankings against advisor-labeled examples. |
 
 > **Note for the team:** Please create a GitHub Projects board in this repository to break these milestones into weekly tasks. Go to the **Projects** tab → **New project** → Choose **Board** → Add columns for each month.
 
@@ -102,21 +102,23 @@ Use these milestones to guide your work. Your team will create a GitHub Projects
 The following resources will help your team understand the problem space and potential technical approaches for this project:
 
 **Background Reading:**
-- [e.g., Link to an article or blog post about the problem domain]
-- [e.g., Link to an industry report or case study]
+- CUAD Dataset Paper: https://arxiv.org/abs/2103.06268
+- Contract Understanding Atticus Dataset GitHub: https://github.com/TheAtticusProject/cuad
 
 **Technical Tutorials:**
-- [e.g., Link to a free tutorial on the ML technique(s) involved]
-- [e.g., Link to documentation for a key library or tool]
+- Hugging Face NLP Course: https://huggingface.co/learn/nlp-course
+- Hugging Face Transformers Documentation: https://huggingface.co/docs/transformers
 
 **Code Examples:**
-- [e.g., Link to a relevant GitHub repo]
-- [e.g., Link to a sample implementation or starter code]
+- CUAD GitHub Repository: https://github.com/TheAtticusProject/cuad
+- Hugging Face Text Classification Examples: https://github.com/huggingface/transformers/tree/main/examples
 
 **Other:**
-- [Links to any additional resources — e.g., papers, videos, podcasts, etc.]
+- •	Attention Is All You Need (Transformer Paper)
+  •	Practical Legal NLP examples on Hugging Face
 
-*Feel free to explore beyond these, and share anything interesting you find with me!*
+
+*Feel free to explore beyond these,and share anything interesting you find with me!*
 
 ---
 
@@ -125,16 +127,27 @@ The following resources will help your team understand the problem space and pot
 **Official check-ins:** During our biweekly 45-minute AI Studio Lab Section meeting block (2nd and 4th week of every month)
 
  **Other ways to reach out to me with questions:** 
-* [e.g., Your team's channel within Break Through Tech’s Discord space]
-* [e.g., Email; please copy your teammates and AI Studio Coach]
-* [e.g., Request a team check-in on Zoom]
-* [Note: I will aim to respond within 48 hours. Please reach out to your AI Studio Coach with urgent questions.]
+* Email: lipika.mukherjee@accenture.com
+  Please include all teammates and the AI Studio Coach.
+  
+* Discord: Use the team's assigned Break Through Tech channel.
+  
+* Additional meetings:
+  Request through email if additional guidance is needed.
+
+* Response expectation:
+  I will aim to respond within 48 hours.
+
 
 > 💡 **Challenge Advisor: Please update the above based on your availability and preference. If you are not able to answer questions or meet with fellows outside of the biweekly Lab Section check-ins, simply write in "N/A (only available during the official check-in times)"**
 
 **Recommended free coding / collaboration tools**
-* […]
-* […]
+* Google Colab
+• GitHub Projects
+• GitHub Issues
+• VS Code
+• Jupyter Notebooks
+
 
 ---
 
