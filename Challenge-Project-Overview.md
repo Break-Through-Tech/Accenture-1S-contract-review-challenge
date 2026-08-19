@@ -1,40 +1,3 @@
----
-
-> ## Challenge Advisor: Update & Finalize Your Project Overview
->
-> > 💡 **These grey text instructions are just for you, the team's Challenge Advisor; please delete them once you have completed the steps below.**
->
-> We've pre-populated this Challenge Project Overview page — which is what will be shared with your Break Through Tech student team in August — using the details from your submission form. You should have received an email inviting you to join this repo as a Collaborator, enabling you to add files and make edits.
-> 
-> In order for your project to be finalized and assigned to a team, please:
-> 1. **Review all sections below** and update or expand any content as needed, making sure to address the SME Feedback in the section immediately below. Look for square brackets to find the places below that require additional inputs from you (e.g., "About [Company / Org Name]").
-> 2. **Add your dataset** to the [data folder](data) in this repo.
-> 3. **Close the Issue assigned to you in this repo** to let us know that you have made your edits and the overview page is ready for final review. You can do this by going to the _Issues_ tab in the top left section of the menu above, add a comment that says "CA review complete", and click the button to Close the Issue. 
->
-> If you're unfamiliar with how to edit a page like this in GitHub, check out [this tutorial](https://ubc-lib-geo.github.io/gis-workshop-waml-template/content/handson/edit-readme.html) for a quick overview (start with step 2 and only edit this page), and [this guide](https://ubc-lib-geo.github.io/gis-workshop-waml-template/content/markdown.html) on how to use Markdown to compose text.
->
->
-> ❌ Remember that this is a public repo. Do NOT include: Proprietary data, PII, API keys, credentials, or anything confidential.
-
----
-
-## 📋 BTT Internal Evaluation Notes
-*(This section is for BTT staff and CAs only — remove before sharing with students)*
-
-### Technical Vetting
-| Check | Status | Notes |
-| :--- | :--- | :--- |
-| Python Compatibility | 🟢 | Project utilizes standard libraries (HuggingFace transformers, scikit-learn, pandas) compatible with free-tier Google Colab environments. |
-| Data Readiness | 🟡 | CUAD dataset is well-structured but requires significant effort to parse raw PDF text and align token-level labels for 41 categories, which may consume excessive time during early weeks. |
-| Resource Check | 🟢 | Project fits within memory constraints; however, fine-tuning large transformer models will require careful batch size management in Colab. |
-
-### Internal Scores
-- **Student Fit Score:** 7/10
-- **Technical Depth Score:** 8/10
-- **Overall Recommendation:** REVISE
-
-### Advisor Feedback Draft
-The CUAD-based contract triage pipeline is a high-value industrial use case with excellent potential for technical rigor. To ensure success within the timeframe of the program, I suggest: (i) pivoting from fine-tuning from scratch to utilizing pre-trained lightweight models (e.g., DistilRoBERTa) to reduce hardware overhead demand; and (ii) constraining the scope by focusing on the 10 most impactful clause categories, and having the full 41 as a stretch goal.
 
 ---
 
@@ -85,15 +48,53 @@ Use these milestones to guide your work. Your team will create a GitHub Projects
 **Location:** https://github.com/TheAtticusProject/cuad  
 
 ### Key Details
-- Real-world commercial contracts from the CUAD dataset (510 contracts, 41 expert-annotated clause categories), raw text/PDF available.
-- Teams must implement strict preprocessing rules to handle document length variance and ensure text cleaning captures the necessary legal terminology for high-accuracy classification.
+- `CUADv1.json` contains 510 commercial contracts and 13,823 annotated answer spans across 41 contract-review categories.
+- Use the prepared JSON files: `train_separate_questions.json` contains 408 contracts and `test.json` contains 102 contracts. These are the **official** train/test splits released by The Atticus Project — split at the contract level (not by individual clause) to prevent data leakage, and directly comparable to the results in the original CUAD paper. Do not re-split the data yourselves.
+- Contract text is already available in each JSON document's `paragraphs[].context` field, with clause questions in `paragraphs[].qas[]` and labeled spans in `paragraphs[].qas[].answers[]`. **Do not parse raw PDFs for this project.**
+- `category_descriptions.csv` provides the name, description, answer format, and group for each of the 41 categories.
+- Contracts vary substantially in length, so teams should develop a chunking strategy, preserve important legal terminology during cleaning, and account for class imbalance.
+
+| Dataset / Source | Purpose in Project | Format | Access |
+|---|---|---|---|
+| **CUAD Category Descriptions** | Defines the 41 clause categories and provides guidance on what each category represents. Useful for building the label mapping and understanding the classification task. | CSV | [CUAD GitHub Repository](https://github.com/TheAtticusProject/cuad) |
+| **CUAD Dataset – Hugging Face** | Provides a machine-learning-friendly way to load CUAD directly into Python and Hugging Face workflows.| Hugging Face Dataset | [CUAD on Hugging Face](https://huggingface.co/datasets/theatticusproject/cuad-qa) |
+
+> ⚠️ **Note on Hugging Face naming:** use `theatticusproject/cuad-qa` specifically. The similarly named `theatticusproject/cuad` (no `-qa`) is a different, unstructured repository containing only documentation text — it is **not** usable contract data.
+
+### Working Dataset Expectations
+
+* **Primary Dataset:** Use the CUAD (Contract Understanding Atticus Dataset), containing 510 commercial contracts and 41 expert-annotated clause categories.
+* **Initial Scope:** Start with approximately 50–100 contracts for data exploration, preprocessing, and baseline development before expanding to the full dataset.
+* **Data Exploration:** Analyze contract length, clause frequency, category distribution, and potential class imbalance.
+* **Preprocessing:** Clean and standardize contract text while preserving relevant clause boundaries and annotations.
+* **Chunking:** Develop a chunking strategy that allows long contracts to be processed by transformer models while retaining sufficient context.
+* **Data Splits:** Create contract-level training, validation, and test sets to prevent data leakage.
+* **Classification Labels:** Use CUAD’s 41 clause categories as the initial multi-label classification targets.
+* **Evidence Retention:** Preserve the relevant text span for each detected clause so predictions can be explained and reviewed.
+* **Risk Scoring:** Develop a separate, explainable rule-based layer to assign **Low/Medium/High** risk, since CUAD does not provide risk labels.
+* **Contract-Level Triage:** Aggregate clause-level risk scores into an overall contract risk/triage score.
+* **Reproducibility:** Document the dataset version, preprocessing, data splits, assumptions, and methodology in GitHub.
+* **Final Output:** The pipeline should produce **clause category → evidence → risk level → rationale → contract-level triage score**.
+
+### Known Preprocessing and Data Risks
+* Normalize contract text consistently, including formatting, whitespace, headers, and page breaks while preserving meaningful legal language.
+* Standardize contract IDs, clause labels, annotation spans, and document metadata across all source files.
+* Handle long contracts carefully: chunk text without separating important clause context or splitting relevant annotations incorrectly.
+* Expect domain and annotation variability: CUAD contracts and expert annotations may differ in structure and language, which can affect model performance on new or unseen contracts.
 
 ---
 
 ## 🛠️ Suggested Approach
-**ML Problem Type:** NLP & Classification  
-**Recommended Libraries:** HuggingFace Transformers, PyTorch/TensorFlow, Scikit-learn, Pandas  
-**Evaluation Metrics:** Precision, Recall, F1-Score for classification; Spearman Correlation for risk-ranking alignment.
+
+**ML Problem Type:** NLP / Multi-label Classification / Information Extraction / Explainable Risk Scoring
+
+**Recommended Libraries:** Hugging Face Transformers, PyTorch, scikit-learn, pandas, NumPy, Hugging Face Datasets
+
+**Suggested Pipeline:** Contract Text → Preprocessing & Chunking → Multi-label Clause Classification → Evidence Extraction → Rule-based Risk Scoring → Contract-level Triage Score
+
+**Evaluation Metrics:** Precision, Recall, and F1-Score for clause classification; High-Risk Recall and Precision@K for contract triage; basic error analysis for risk-scoring results.
+
+**Development Environment:** Google Colab for model training and experiments; VS Code and Jupyter Notebooks for development and analysis.
 
 ---
 
@@ -117,8 +118,47 @@ The following resources will help your team understand the problem space and pot
 - •	Attention Is All You Need (Transformer Paper)
   •	Practical Legal NLP examples on Hugging Face
 
+**Suggested Pipeline:**
+
+CUAD Contracts → Preprocessing → Chunking → Multi-label Clause Classification → Evidence Extraction → Rule-based Risk Scoring → Contract-level Triage Score → Explainable Risk Report
+
+## Recommended Modeling Approach
+
+- **Establish a Baseline:** Build a simple TF-IDF/keyword-based classifier before using transformer models.
+- **Train the Model:** Fine-tune a transformer encoder for multi-label classification across the 41 CUAD clause categories.
+- **Preserve Evidence:** Retain the relevant contract text/span for each detected clause to support explainability.
+- **Add Risk Scoring:** Develop an explainable rule-based layer that assigns **Low / Medium / High** risk based on detected clause characteristics.
+- **Calculate Triage Score:** Aggregate clause-level risks into an overall **contract-level triage score** to help prioritize contracts for review.
+- **Evaluate Performance:** Measure clause classification using **Precision, Recall, and F1 Score**, with emphasis on identifying high-risk clauses.
+- **Perform Error Analysis:** Review false positives, false negatives, rare clause categories, and difficult contract language to identify opportunities for improvement.
 
 *Feel free to explore beyond these,and share anything interesting you find with me!*
+
+---
+
+## Evaluation Metrics
+
+| **Component** | **Metric** | **Purpose** |
+|---|---|---|
+| Clause Classification | **Precision** | Of the clauses the model identifies, how many are correct? |
+| Clause Classification | **Recall** | Of the relevant clauses in the contract, how many does the model find? |
+| Clause Classification | **F1 Score** | Combines Precision and Recall into one overall classification score. |
+| Risk Scoring | **Accuracy** | How often does the system correctly assign Low, Medium, or High risk? |
+| Contract Triage | **High-Risk Recall** | Of the contracts that should receive priority review, how many does the system successfully flag? |
+
+### Primary Evaluation
+
+Team should focus primarily on **Precision, Recall, and F1 Score** when evaluating clause classification.
+
+For the final risk-triage pipeline, **High-Risk Recall** is especially important because the goal is to avoid missing contracts that may require additional legal or procurement review.
+
+Team should also perform a simple **error analysis** by reviewing examples of:
+- Incorrectly identified clauses
+- Missed clauses
+- Incorrect risk assignments
+- Difficult or ambiguous contract language
+
+The goal is not only to report a score, but to understand **where the model works well, where it fails, and why**.
 
 ---
 
@@ -179,10 +219,13 @@ For long contracts, use paragraph-based chunking where possible, with a maximum 
 
 ## 🚀 Getting Started
 
-1. **Review this overview document** and note any questions for our first meeting
-2. **Begin reviewing the dataset** using the link above
-3. **Read the GitHub Projects documentation** [here](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)
+Read this overview and list your open questions before our first team meeting.
 
+1. **Review this overview document** and note any questions for our first meeting: Understand the project goals, technical approach, dataset expectations, milestones.
+2. **Begin reviewing the JSON dataset** in the [data folder](data/cuad) Explore the 41 clause categories and identify the initial subset of contracts you will use for data exploration and baseline development.
+3. **Read the GitHub Projects documentation** [here](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)
+4. **Prepare Open Questions:** Record questions, assumptions, and areas where you need clarification before the first team meeting.
+5. **Document Your Decisions:** Keep important technical decisions and findings in GitHub Issues or project documentation so the entire team can follow the project's progress.
 I’m excited to work with you!
 
 ---
