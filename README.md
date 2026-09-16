@@ -12,7 +12,7 @@
 |------------------|---------------|--------------------------------------------------------------------------|
 | Johnson Jasson    | @Jhoncho517  | EDA on class imbalance, Data Cleaning and split            |
 | Elizabeth Li   | @elizabethzli   |  to be updated |
-| Amina Hassan     | @aminahassan  | Data preprocessing, feature engineering, data validation                 |
+| Anika Tasmin     | @anikat786    | EDA on class imbalance                 |
 | Priya Mehta      | @pmehta       | Model selection, hyperparameter tuning, model training and optimization  |
 | Chris Park       | @chrispark    | Model evaluation, performance analysis, results interpretation           |
 
