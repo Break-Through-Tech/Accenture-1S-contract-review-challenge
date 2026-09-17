@@ -10,7 +10,7 @@
 
 | Name             | GitHub Handle | Contribution                                                             |
 |------------------|---------------|--------------------------------------------------------------------------|
-| Johnson Jasson    | @Jhoncho517  | EDA on class imbalance, Data Cleaning and split            |
+| Johnson Jasson    | @Jhoncho517  | TBA         |
 | Elizabeth Li   | @elizabethzli   |  to be updated |
 | Anika Tasmin     | @anikat786    | EDA on class imbalance                 |
 | Priya Mehta      | @pmehta       | Model selection, hyperparameter tuning, model training and optimization  |
