@@ -8,13 +8,13 @@
 
 **Example:**
 
-| Name             | GitHub Handle | Contribution                                                             |
-|------------------|---------------|--------------------------------------------------------------------------|
-| Johnson Jasson    | @Jhoncho517  | TBA         |
-| Elizabeth Li   | @elizabethzli   |  to be updated |
-| Anika Tasmin     | @anikat786    | EDA on class imbalance                 |
-| Priya Mehta      | @pmehta       | Model selection, hyperparameter tuning, model training and optimization  |
-| Chris Park       | @chrispark    | Model evaluation, performance analysis, results interpretation           |
+| Name                 | GitHub Handle | Contribution                                                             |
+|----------------------|---------------|--------------------------------------------------------------------------|
+| Johnson Jasson       | @Jhoncho517   | TBA                                                                      |
+| Elizabeth Li         | @elizabethzli |  to be updated                                                           |
+| Anika Tasmin         | @anikat786    | EDA on class imbalance                                                   |
+| Aidana Kudaibergenova| @aidushaFrank | Building a chunking strategy                                             |
+| Chris Park           | @chrispark    | Model evaluation, performance analysis, results interpretation           |
 
 ---
 
