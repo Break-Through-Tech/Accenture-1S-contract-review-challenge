@@ -10,7 +10,7 @@
 
 | Name                 | GitHub Handle | Contribution                                                             |
 |----------------------|---------------|--------------------------------------------------------------------------|
-| Johnson Jasson       | @Jhoncho517   | TBA                                                                      |
+| Johnson Jasson       | @Jhoncho517   | Data split and class imbalance                                                                    |
 | Elizabeth Li         | @elizabethzli |  to be updated                                                           |
 | Anika Tasmin         | @anikat786    | EDA on class imbalance                                                   |
 | Aidana Kudaibergenova| @aidushaFrank | Building a chunking strategy                                             |
