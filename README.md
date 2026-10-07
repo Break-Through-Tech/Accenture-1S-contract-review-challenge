@@ -10,11 +10,12 @@
 
 | Name                 | GitHub Handle | Contribution                                                             |
 |----------------------|---------------|--------------------------------------------------------------------------|
-| Johnson Jasson       | @Jhoncho517   | Data split and class imbalance                                                                    |
+| Johnson Jasson       | @Jhoncho517   | Data split and class imbalance                                           |
 | Elizabeth Li         | @elizabethzli |  to be updated                                                           |
 | Anika Tasmin         | @anikat786    | EDA on class imbalance                                                   |
 | Aidana Kudaibergenova| @aidushaFrank | Building a chunking strategy                                             |
 | Chris Park           | @chrispark    | Model evaluation, performance analysis, results interpretation           |
+| Dat Le               | @DatLe721     | Building a chunking strategy                                             |
 
 ---
 
