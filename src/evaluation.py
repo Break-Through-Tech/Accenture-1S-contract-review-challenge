@@ -55,7 +55,9 @@ def contract_truth_from_chunks(chunks, labels):
     truth = pd.DataFrame(0, index=contracts, columns=labels, dtype=int)
 
     for row in chunks.itertuples():
-        for category in row.categories or []:
+        categories = set(row.categories or [])
+        categories.update(getattr(row, "partial_categories", []) or [])
+        for category in categories:
             normalized = category.casefold() if isinstance(category, str) else category
             if normalized in labels:
                 truth.at[row.contract, normalized] = 1
