@@ -14,7 +14,7 @@
 | Elizabeth Li         | @elizabethzli |  to be updated                                                           |
 | Anika Tasmin         | @anikat786    | EDA on class imbalance                                                   |
 | Aidana Kudaibergenova| @aidushaFrank | Building a chunking strategy                                             |
-| Chris Park           | @chrispark    | Model evaluation, performance analysis, results interpretation           |
+| Denise Reyes Lujan   | @dr4511       | Initial Data Analysis                                                    |
 | Dat Le               | @DatLe721     | Building a chunking strategy                                             |
 
 ---
