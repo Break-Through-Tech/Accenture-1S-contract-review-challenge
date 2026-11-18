@@ -42,16 +42,16 @@ class ClauseRiskResult:
 # -------------------------------------------------------------------
 
 CATEGORY_BASE_SCORES = {
-    "Cap On Liability": 25,
-    "Termination For Convenience": 20,
-    "Governing Law": 10,
-    "Anti-Assignment": 15,
-    "Change Of Control": 20,
-    "Renewal Term": 15,
-    "Exclusivity": 25,
-    "Non-Compete": 30,
-    "Notice Period To Terminate Renewal": 15,
-    "Liquidated Damages": 25,
+    "cap on liability": 25,
+    "termination for convenience": 20,
+    "governing law": 10,
+    "anti-assignment": 15,
+    "change of control": 20,
+    "renewal term": 15,
+    "exclusivity": 25,
+    "non-compete": 30,
+    "notice period to terminate renewal": 15,
+    "liquidated damages": 25,
 }
 
 
@@ -1040,3 +1040,56 @@ def score_clause(
         needs_confirmation=probability < confirmation_threshold,
         extracted_features=extracted_features,
     )
+
+def score_chunk(
+    chunk: dict,
+    category_thresholds: dict[str, float] | None = None,
+    default_threshold: float = 0.50,
+    policy: dict | None = None,
+) -> list[ClauseRiskResult]:
+    """
+    Scores every predicted category in one chunk.
+
+    Expected chunk format:
+    {
+        "contract_id": "...",
+        "chunk_id": 12,
+        "text": "...",
+        "predictions": [
+            {
+                "category": "Renewal Term",
+                "probability": 0.93,
+                "features": {...}  # optional
+            }
+        ]
+    }
+    """
+    category_thresholds = category_thresholds or {}
+
+    evidence = chunk["text"]
+    results = []
+
+    for prediction in chunk["predictions"]:
+        category = prediction["category"]
+        probability = prediction["probability"]
+
+        threshold = category_thresholds.get(
+            category,
+            default_threshold,
+        )
+
+        # Skip categories that were not positively predicted.
+        if probability < threshold:
+            continue
+
+        result = score_clause(
+            category=category,
+            evidence=evidence,
+            probability=probability,
+            features=prediction.get("features"),
+            policy=policy,
+        )
+
+        results.append(result)
+
+    return results
