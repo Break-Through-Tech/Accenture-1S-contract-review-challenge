@@ -315,3 +315,16 @@ def prepare_training_chunks(df, neg_ratio=3, seed=42):
         .sample(frac=1, random_state=seed)
         .reset_index(drop=True)
     )
+
+def get_chunks(path, tokenizer, relevant_categories):
+    chunks = json_to_df_new(path, tokenizer)
+    chunks['categories'] = chunks['categories'].apply(
+        lambda labels: [label for label in labels if label in relevant_categories] or ["None"]
+    )
+    return chunks
+
+def remove_partial(chunks):
+    """Remove chunks with label_status == "partial"."""
+    if "label_status" not in chunks.columns:
+        return chunks
+    return chunks[chunks["label_status"] != "partial"]
